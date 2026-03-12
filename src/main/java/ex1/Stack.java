@@ -1,4 +1,6 @@
-public interface IStack<E> {
+package ex1;
+
+public interface Stack<E> {
     public boolean isEmpty();
     public int size();
     public void push (E item ) ;

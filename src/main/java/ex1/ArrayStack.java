@@ -1,4 +1,6 @@
-public class ArrayStack<E> implements IStack<E> {
+package ex1;
+
+public class ArrayStack<E> implements Stack<E> {
     private Object[] data;
     private int top = 0;
 
@@ -8,11 +10,11 @@ public class ArrayStack<E> implements IStack<E> {
 
     @Override
     public boolean isEmpty() {
-        return data.length == 0;
+        return top == 0;
     }
     @Override
     public int size() {
-        return data.length;
+        return top;
     }
 
     @Override
