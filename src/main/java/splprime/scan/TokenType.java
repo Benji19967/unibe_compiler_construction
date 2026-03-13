@@ -2,6 +2,7 @@ package splprime.scan;
 
 public enum TokenType {
     // Operators,
+    NOT,
     PLUS,
     MINUS,
     STAR,
@@ -19,6 +20,17 @@ public enum TokenType {
     RIGHT_PAREN,
     LEFT_BRACE,
     RIGHT_BRACE,
+    SEMICOLON,
+
+    // Keywords
+    TRUE,
+    FALSE,
+    AND,
+    OR,
+    PRINT,
+    IF,
+    ELSE,
+    WHILE,
 
     // Strings
     STRING,
