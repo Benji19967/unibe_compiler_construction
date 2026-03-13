@@ -117,7 +117,6 @@ public class Scanner {
 						addToken(type, text, line);
 					} else {
 						// No case was matched
-						System.out.println((int) c);
 						SplPrime.reportError(line, "Unexpected character: " + c);
 					}
 			}
