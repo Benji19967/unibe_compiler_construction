@@ -19,6 +19,7 @@ public class Scanner {
 			"false", TokenType.FALSE,
 			"and", TokenType.AND,
 			"or", TokenType.OR,
+			"var", TokenType.VAR,
 			"print", TokenType.PRINT,
 			"if", TokenType.IF,
 			"else", TokenType.ELSE,

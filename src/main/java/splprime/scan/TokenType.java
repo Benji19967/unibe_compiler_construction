@@ -27,6 +27,7 @@ public enum TokenType {
     FALSE,
     AND,
     OR,
+    VAR,
     PRINT,
     IF,
     ELSE,

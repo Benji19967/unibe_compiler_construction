@@ -1,0 +1,63 @@
+options
+{
+    LOOKAHEAD=2;
+    OUTPUT_DIRECTORY = "src/main/java/splprime/generated_scan";
+}
+PARSER_BEGIN(SPLPrime)
+package splprime.generated_scan;
+public class SPLPrime
+{
+}
+PARSER_END(SPLPrime)
+SKIP :
+{
+    " "
+|   "\n"
+|   "\r"
+|   "\r\n"
+|   "\t"
+|   < SINGLE_LINE_COMMENT : "//" (~["\n","\r"])* >
+}
+TOKEN :
+{
+    < NOT: "!" >
+|   < PLUS: "+" >
+|   < MINUS: "-" >
+|   < STAR: "*" >
+|   < DIVIDE: "/" >
+|   < EQUAL: "=" >
+|   < EQUAL_EQUAL: "==" >
+|   < NOT_EQUAL: "!=" >
+|   < GREATER: ">" >
+|   < LESS: "<" >
+|   < GREATER_EQUAL: ">=" >
+|   < LESS_EQUAL: "<=" >
+
+      // Special characters,
+|   < LEFT_PAREN: "(" >
+|   < RIGHT_PAREN: ")" >
+|   < LEFT_BRACE: "{" >
+|   < RIGHT_BRACE: "}" >
+|   < SEMICOLON: ";" >
+
+      // Keywords
+|    < TRUE: "true" >
+|    < FALSE: "false" >
+|    < AND: "and" >
+|    < OR: "or" >
+|    < VAR: "var" >
+|    < PRINT: "print" >
+|    < IF: "if" >
+|    < ELSE: "else" >
+|    < WHILE: "while" >
+
+      // Strings
+|    < STRING: "\"" (~["\n", "\r", "\""])* "\"" >
+
+      // Numbers
+|   < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   < DIGIT: ["0"-"9"] >
+
+      // Identifiers
+|   < IDENTIFIER: (["a"-"z"])+ >
+}

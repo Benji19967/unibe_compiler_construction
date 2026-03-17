@@ -18,3 +18,9 @@ clean:
 
 splprime:
 	java src/main/java/splprime/SplPrime.java inputs/sample.spl
+
+cc_generated_scanner:
+	java -cp /usr/local/lib/javacc-7.0.13.jar javacc src/main/javacc/spl_prime.jj
+
+generated_scanner:
+	java src/main/java/splprime/generated_scan/GeneratedScanner.java
