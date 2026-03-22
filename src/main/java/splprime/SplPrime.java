@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import splprime.ast.Stmt;
+import splprime.parser.Parser;
 import splprime.scan.Scanner;
 import splprime.scan.Token;
 import splprime.scan.TokenType;
@@ -15,11 +17,11 @@ public class SplPrime {
 	static boolean hadError = false;
 
 	// Expects a single file that comprises SPL' program as argument
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		runFile(args[0]);
 	}
 
-	private static void runFile(String path) throws IOException {
+	private static void runFile(String path) throws Exception {
 		byte[] bytes = Files.readAllBytes(Paths.get(path));
 		run(new String(bytes, Charset.defaultCharset()));
 
@@ -29,7 +31,7 @@ public class SplPrime {
 		}
 	}
 
-	private static void run(String source) {
+	private static void run(String source) throws Exception {
 		Scanner scanner = new Scanner(source);
 		List<Token> tokens = scanner.scanTokens();
 		tokens.add(new Token(TokenType.EOF, "", new Object(), -1));
@@ -40,6 +42,11 @@ public class SplPrime {
 		}
 
 		// TODO: construct the corresponding AST
+		Parser parser = new Parser(tokens);
+		List<Stmt> statements = parser.parse();
+		for (Stmt s : statements) {
+			System.out.println(s);
+		}
 	}
 
 	public static void reportError(int line, String message) {

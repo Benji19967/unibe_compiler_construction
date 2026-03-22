@@ -22,7 +22,7 @@ public interface Visitor {
 
     int visitWhileStmt(WhileStmt stmt);
 
-    int visitBlock(Stmt stmt);
+    int visitBlock(Block stmt);
 
     int visitVar(Var stmt);
 }
