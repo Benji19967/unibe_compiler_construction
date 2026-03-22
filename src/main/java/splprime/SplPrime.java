@@ -8,6 +8,7 @@ import java.util.List;
 
 import splprime.scan.Scanner;
 import splprime.scan.Token;
+import splprime.scan.TokenType;
 
 public class SplPrime {
 
@@ -31,11 +32,14 @@ public class SplPrime {
 	private static void run(String source) {
 		Scanner scanner = new Scanner(source);
 		List<Token> tokens = scanner.scanTokens();
+		tokens.add(new Token(TokenType.EOF, "", new Object(), -1));
 
 		// For now, just print the tokens
 		for (Token token : tokens) {
 			System.out.println(token);
 		}
+
+		// TODO: construct the corresponding AST
 	}
 
 	public static void reportError(int line, String message) {

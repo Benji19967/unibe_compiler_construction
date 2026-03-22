@@ -40,5 +40,8 @@ public enum TokenType {
     NUMBER,
 
     // Identifiers
-    IDENTIFIER
+    IDENTIFIER,
+
+    // End-of-file
+    EOF
 }

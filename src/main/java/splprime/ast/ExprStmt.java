@@ -1,6 +1,6 @@
 package splprime.ast;
 
-public class ExprStmt extends Stmt{
+public class ExprStmt extends Stmt {
     public final Expr expression;
 
     public ExprStmt(Expr expression) {

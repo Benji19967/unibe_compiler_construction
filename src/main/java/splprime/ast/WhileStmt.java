@@ -1,11 +1,11 @@
 package splprime.ast;
 
 public class WhileStmt extends Stmt {
-    public final Expr left;
+    public final Expr condition;
     public final Stmt statement;
 
-    public WhileStmt(Expr left, Stmt statement) {
-        this.left = left;
+    public WhileStmt(Expr condition, Stmt statement) {
+        this.condition = condition;
         this.statement = statement;
     }
 
