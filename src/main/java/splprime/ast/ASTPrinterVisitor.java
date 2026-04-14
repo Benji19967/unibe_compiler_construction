@@ -43,8 +43,6 @@ public class ASTPrinterVisitor implements Visitor {
         return 0;
     }
 
-
-
     @Override
     public int visitIfStmt(IfStmt stmt) {
         System.out.println();

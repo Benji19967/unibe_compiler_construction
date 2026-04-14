@@ -20,7 +20,6 @@ public class Parser {
     }
 
     // --- Grammar rules ---
-
     private List<Stmt> program() throws Exception {
         List<Stmt> statements = new ArrayList<>();
 
@@ -52,40 +51,59 @@ public class Parser {
     }
 
     private Stmt statement() throws Exception {
-        // TODO: could extract each if block into its own function
         if (match(TokenType.IF)) {
-            match(TokenType.LEFT_PAREN);
-            Expr condition = expression();
-            match(TokenType.RIGHT_PAREN);
-            Stmt then_stmt = statement();
-            if (match(TokenType.ELSE)) {
-                Stmt else_stmt = statement();
-                return new IfStmt(condition, then_stmt, else_stmt);
-            }
-            return new IfStmt(condition, then_stmt, null);
+            return ifStmt();
         } else if (match(TokenType.PRINT)) {
-            Expr expr = expression();
-            match(TokenType.SEMICOLON);
-            return new PrintStmt(expr);
+            return printStmt();
         } else if (match(TokenType.WHILE)) {
-            match(TokenType.LEFT_PAREN);
-            Expr condition = expression();
-            match(TokenType.RIGHT_PAREN);
-            Stmt stmt = statement();
-            return new WhileStmt(condition, stmt);
+            return whileStmt();
         } else if (match(TokenType.LEFT_BRACE)) {
-            List<Stmt> statements = new ArrayList<>();
-            while (!match(TokenType.RIGHT_BRACE)) {
-                    statements.add(declaration());
-            }
-            return new Block(statements);
+            return block();
         } else {
-            Expr expr = expression();
-            match(TokenType.SEMICOLON);
-            return new ExprStmt(expr);
-
+            return exprStmt();
         }
     }
+
+    private IfStmt ifStmt() throws Exception {
+        match(TokenType.LEFT_PAREN);
+        Expr condition = expression();
+        match(TokenType.RIGHT_PAREN);
+        Stmt then_stmt = statement();
+        if (match(TokenType.ELSE)) {
+            Stmt else_stmt = statement();
+            return new IfStmt(condition, then_stmt, else_stmt);
+        }
+        return new IfStmt(condition, then_stmt, null);
+    }
+
+    private PrintStmt printStmt() throws Exception {
+        Expr expr = expression();
+        match(TokenType.SEMICOLON);
+        return new PrintStmt(expr);
+    }
+
+    private WhileStmt whileStmt() throws Exception {
+        match(TokenType.LEFT_PAREN);
+        Expr condition = expression();
+        match(TokenType.RIGHT_PAREN);
+        Stmt stmt = statement();
+        return new WhileStmt(condition, stmt);
+    }
+
+    private Block block() throws Exception {
+        List<Stmt> statements = new ArrayList<>();
+        while (!match(TokenType.RIGHT_BRACE)) {
+                statements.add(declaration());
+        }
+        return new Block(statements);
+    }
+
+    private ExprStmt exprStmt() throws Exception {
+        Expr expr = expression();
+        match(TokenType.SEMICOLON);
+        return new ExprStmt(expr);
+    }
+
 
     private Expr expression() throws Exception {
         return assignment();
