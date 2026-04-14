@@ -1,9 +1,10 @@
 package splprime.ast_generated;
+import splprime.generated_scan.Token;
 
 public class Literal extends Expr {
-    public final Object value;
+    public final Token value;
 
-    public Literal(Object value) {
+    public Literal(Token value) {
         this.value = value;
     }
 

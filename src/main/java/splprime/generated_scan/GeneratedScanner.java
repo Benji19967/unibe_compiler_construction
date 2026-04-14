@@ -1,5 +1,6 @@
 package splprime.generated_scan;
 
+import splprime.ast_generated.ASTPrinterVisitor;
 import splprime.ast_generated.Stmt;
 
 import java.io.FileInputStream;
@@ -19,8 +20,9 @@ public class GeneratedScanner {
 //            }
 
             List<Stmt> statements = parser.program();
+            ASTPrinterVisitor visitor = new ASTPrinterVisitor();
             for (Stmt s : statements) {
-                System.out.println(s);
+                s.accept(visitor);
             }
 
             inputStream.close();
