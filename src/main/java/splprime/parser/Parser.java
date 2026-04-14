@@ -65,6 +65,8 @@ public class Parser {
     }
 
     private IfStmt ifStmt() throws Exception {
+        // This takes care of the danling-else problem
+        // by matching it to its nearest preceding if branch
         match(TokenType.LEFT_PAREN);
         Expr condition = expression();
         match(TokenType.RIGHT_PAREN);
