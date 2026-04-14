@@ -10,13 +10,15 @@ public class GeneratedScanner {
             InputStream inputStream = new FileInputStream("inputs/sample.spl");
             SPLPrime parser = new SPLPrime(inputStream);
 
-            Token token;
-            while ((token = parser.getNextToken()).kind != SPLPrimeConstants.EOF) {
-                System.out.println("Token: " + SPLPrimeConstants.tokenImage[token.kind]);
-            }
+//            Token token;
+//            while ((token = parser.getNextToken()).kind != SPLPrimeConstants.EOF) {
+//                System.out.println("Token: " + SPLPrimeConstants.tokenImage[token.kind]);
+//            }
+
+            parser.program();
 
             inputStream.close();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }

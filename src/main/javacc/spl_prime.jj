@@ -7,6 +7,11 @@ PARSER_BEGIN(SPLPrime)
 package splprime.generated_scan;
 public class SPLPrime
 {
+      /** Main entry point. */
+      public static void main(String args[]) throws ParseException {
+        SPLPrime parser = new SPLPrime(System.in);
+        parser.program();
+      }
 }
 PARSER_END(SPLPrime)
 SKIP :
@@ -60,4 +65,109 @@ TOKEN :
 
       // Identifiers
 |   < IDENTIFIER: (["a"-"z"])+ >
+}
+
+/** Top level production. */
+void program() : {}
+{
+    (declaration())* <EOF>
+}
+
+void declaration() : {}
+{
+    varDecl()
+    | statement()
+}
+
+void varDecl() : {}
+{
+    <VAR> <IDENTIFIER> (<EQUAL> expression())? <SEMICOLON>
+}
+
+void statement() : {}
+{
+    exprStmt()
+    | ifStmt()
+    | printStmt()
+    | whileStmt()
+    | block()
+}
+
+void exprStmt() : {}
+{
+    expression() <SEMICOLON>
+}
+
+void ifStmt() : {}
+{
+    <IF> <LEFT_PAREN> expression() <RIGHT_PAREN> statement() (<ELSE> statement())?
+}
+
+void printStmt() : {}
+{
+    <PRINT> expression() <SEMICOLON>
+}
+
+void whileStmt() : {}
+{
+    <WHILE> <LEFT_PAREN> expression() <RIGHT_PAREN> statement()
+}
+
+void block() : {}
+{
+    <LEFT_BRACE> (declaration())* <RIGHT_BRACE>
+}
+
+void expression() : {}
+{
+    assignment()
+}
+
+void assignment() : {}
+{
+    <IDENTIFIER> <EQUAL> assignment()
+    | logic_or()
+}
+
+void logic_or() : {}
+{
+    logic_and() (<OR> logic_and())*
+}
+
+void logic_and() : {}
+{
+    equality() (<AND> equality())*
+}
+
+void equality() : {}
+{
+    comparison() ((<NOT_EQUAL> | <EQUAL_EQUAL> ) comparison())*
+}
+
+void comparison() : {}
+{
+    term() ((<GREATER> | <GREATER_EQUAL> | <LESS> | <LESS_EQUAL> ) term())*
+}
+
+void term() : {}
+{
+    factor() ((<MINUS> | <PLUS> ) factor())*
+}
+
+void factor() : {}
+{
+    unary() ((<DIVIDE> | <STAR> ) unary())*
+}
+
+void unary() : {}
+{
+    (<NOT> | <MINUS> ) unary()
+    | primary()
+}
+
+void primary() : {}
+{
+    <TRUE> | <FALSE> | <NUMBER> | <STRING>
+    | <LEFT_PAREN> expression() <RIGHT_PAREN>
+    | <IDENTIFIER>
 }
