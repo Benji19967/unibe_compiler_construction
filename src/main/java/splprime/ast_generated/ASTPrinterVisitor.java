@@ -1,4 +1,4 @@
-package splprime.ast;
+package splprime.ast_generated;
 
 public class ASTPrinterVisitor implements Visitor {
 

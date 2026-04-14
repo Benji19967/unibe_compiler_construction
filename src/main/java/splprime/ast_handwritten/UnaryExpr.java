@@ -1,20 +1,18 @@
-package splprime.ast;
+package splprime.ast_handwritten;
 
 import splprime.scan.Token;
 
-public class BinaryExpr extends Expr {
-    public final Expr left;
+public class UnaryExpr extends Expr {
     public final Token operator;
     public final Expr right;
 
-    public BinaryExpr(Expr left, Token operator, Expr right) {
-        this.left = left;
+    public UnaryExpr(Token operator, Expr right) {
         this.operator = operator;
         this.right = right;
     }
 
     @Override
     public int accept(Visitor v) {
-        return v.visitBinaryExpr(this);
+        return v.visitUnaryExpr(this);
     }
 }

@@ -1,6 +1,6 @@
 package splprime.parser;
 
-import splprime.ast.*;
+import splprime.ast_handwritten.*;
 import splprime.scan.Token;
 import splprime.scan.TokenType;
 
@@ -127,41 +127,49 @@ public class Parser {
 
     private Expr logic_or() throws Exception {
         Expr expr = logic_and();
+
         while (match(TokenType.OR)) {
             Token or = previous();
             Expr and = logic_and();
             expr = new BinaryExpr(expr, or, and);
         }
+
         return expr;
     }
 
     private Expr logic_and() throws Exception {
         Expr expr = equality();
+
         while (match(TokenType.AND)) {
             Token and = previous();
             Expr eq = equality();
             expr = new BinaryExpr(expr, and, eq);
         }
+
         return expr;
     }
 
     private Expr equality() throws Exception {
         Expr expr = comparison();
+
         while (match(TokenType.NOT_EQUAL, TokenType.EQUAL_EQUAL)) {
             Token operator = previous();
             Expr comp = comparison();
             expr = new BinaryExpr(expr, operator, comp);
         }
+
         return expr;
     }
 
     private Expr comparison() throws Exception {
         Expr expr = term();
+
         while (match(TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL)) {
             Token operator = previous();
             Expr comp = term();
             expr = new BinaryExpr(expr, operator, comp);
         }
+
         return expr;
     }
 

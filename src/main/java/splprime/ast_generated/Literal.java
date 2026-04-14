@@ -1,6 +1,4 @@
-package splprime.ast;
-
-import splprime.scan.Token;
+package splprime.ast_generated;
 
 public class Literal extends Expr {
     public final Object value;

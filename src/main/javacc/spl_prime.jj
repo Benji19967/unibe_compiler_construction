@@ -5,6 +5,10 @@ options
 }
 PARSER_BEGIN(SPLPrime)
 package splprime.generated_scan;
+import splprime.ast_generated.*;
+import java.util.List;
+import java.util.ArrayList;
+
 public class SPLPrime
 {
       /** Main entry point. */
@@ -68,106 +72,159 @@ TOKEN :
 }
 
 /** Top level production. */
-void program() : {}
+List<Stmt> program() : { List<Stmt> stmts = new ArrayList<Stmt>(); Stmt s; }
 {
-    (declaration())* <EOF>
+    (s = declaration() { stmts.add(s); } )* <EOF> { return stmts; }
 }
 
-void declaration() : {}
+Stmt declaration() : { Stmt s; }
 {
-    varDecl()
-    | statement()
+    s = varDecl() { return s; }
+    | s = statement() { return s; }
 }
 
-void varDecl() : {}
+Var varDecl() : { Expr e = null; splprime.generated_scan.Token name; }
 {
-    <VAR> <IDENTIFIER> (<EQUAL> expression())? <SEMICOLON>
+    <VAR> name = <IDENTIFIER> (<EQUAL> e = expression())? <SEMICOLON>
+    { return new Var(name, e); }
 }
 
-void statement() : {}
+Stmt statement() : { Stmt s; }
 {
-    exprStmt()
-    | ifStmt()
-    | printStmt()
-    | whileStmt()
-    | block()
+    s = exprStmt() { return s; }
+    | s = ifStmt() { return s; }
+    | s = printStmt() { return s; }
+    | s = whileStmt() { return s; }
+    | s = block() { return s; }
 }
 
-void exprStmt() : {}
+ExprStmt exprStmt() : { Expr e; }
 {
-    expression() <SEMICOLON>
+    e = expression() <SEMICOLON>
+    { return new ExprStmt(e); }
 }
 
-void ifStmt() : {}
+IfStmt ifStmt() : {Expr e; Stmt then_stmt; Stmt else_stmt = null; }
 {
-    <IF> <LEFT_PAREN> expression() <RIGHT_PAREN> statement() (<ELSE> statement())?
+    <IF> <LEFT_PAREN> e = expression() <RIGHT_PAREN>
+    then_stmt = statement()
+    (<ELSE> else_stmt = statement())?
+    { return new IfStmt(e, then_stmt, else_stmt); }
 }
 
-void printStmt() : {}
+PrintStmt printStmt() : { Expr e; }
 {
-    <PRINT> expression() <SEMICOLON>
+    <PRINT> e = expression() <SEMICOLON>
+    { return new PrintStmt(e); }
 }
 
-void whileStmt() : {}
+WhileStmt whileStmt() : { Expr e; Stmt s; }
 {
-    <WHILE> <LEFT_PAREN> expression() <RIGHT_PAREN> statement()
+    <WHILE> <LEFT_PAREN> e = expression() <RIGHT_PAREN> s = statement()
+    { return new WhileStmt(e, s); }
 }
 
-void block() : {}
+Block block() : { List<Stmt> stmts = new ArrayList<Stmt>(); Stmt s; }
 {
-    <LEFT_BRACE> (declaration())* <RIGHT_BRACE>
+    <LEFT_BRACE>
+    (
+        s = declaration()
+        { stmts.add(s); }
+    )* <RIGHT_BRACE>
+    { return new Block(stmts); }
 }
 
-void expression() : {}
+Expr expression() : { Expr e; }
 {
-    assignment()
+    e = assignment()
+    { return e; }
 }
 
-void assignment() : {}
+Expr assignment() : { Expr e; splprime.generated_scan.Token name; }
 {
-    <IDENTIFIER> <EQUAL> assignment()
-    | logic_or()
+    LOOKAHEAD(2) // Check if it's "ID ="
+    name = <IDENTIFIER> <EQUAL> e = assignment() { return new Assign(name, e); }
+    | e = logic_or() { return e; }
 }
 
-void logic_or() : {}
+Expr logic_or() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    logic_and() (<OR> logic_and())*
+    left = logic_and()
+    (
+        op = <OR>
+        right = logic_and()
+        {left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void logic_and() : {}
+Expr logic_and() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    equality() (<AND> equality())*
+    left = equality()
+    (
+        op = <AND>
+        right = equality()
+        {left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void equality() : {}
+Expr equality() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    comparison() ((<NOT_EQUAL> | <EQUAL_EQUAL> ) comparison())*
+    left = comparison()
+    (
+        (op = <NOT_EQUAL> | op = <EQUAL_EQUAL> )
+        right = comparison()
+        {left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void comparison() : {}
+Expr comparison() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    term() ((<GREATER> | <GREATER_EQUAL> | <LESS> | <LESS_EQUAL> ) term())*
+    left = term()
+    (
+        (op = <GREATER> | op = <GREATER_EQUAL> | op = <LESS> | op = <LESS_EQUAL> )
+        right = term()
+        { left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void term() : {}
+Expr term() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    factor() ((<MINUS> | <PLUS> ) factor())*
+    left = factor()
+    (
+        (op = <PLUS> | op = <MINUS>)
+        right = factor()
+        { left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void factor() : {}
+Expr factor() : { Expr left; Expr right; splprime.generated_scan.Token op; }
 {
-    unary() ((<DIVIDE> | <STAR> ) unary())*
+    left = unary()
+    (
+        (op = <DIVIDE> | op = <STAR> )
+        right = unary()
+        { left = new BinaryExpr(left, op, right); }
+    )*
+    { return left; }
 }
 
-void unary() : {}
+Expr unary() : { splprime.generated_scan.Token t; Expr e; }
 {
-    (<NOT> | <MINUS> ) unary()
-    | primary()
+    (t = <NOT> | t = <MINUS> ) e = unary() { return new UnaryExpr(t, e); }
+    | e = primary() { return e; }
 }
 
-void primary() : {}
+Expr primary() : { splprime.generated_scan.Token t; Expr e; }
 {
-    <TRUE> | <FALSE> | <NUMBER> | <STRING>
-    | <LEFT_PAREN> expression() <RIGHT_PAREN>
-    | <IDENTIFIER>
+    t = <TRUE>       { return new Literal(t); }
+  | t = <FALSE>      { return new Literal(t); }
+  | t = <NUMBER>     { return new Literal(t); }
+  | t = <STRING>     { return new Literal(t); }
+  | <LEFT_PAREN> e = expression() <RIGHT_PAREN> { return new Grouping(e); }
+  | t = <IDENTIFIER> { return new Variable(t); }
 }

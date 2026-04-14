@@ -1,12 +1,11 @@
 package splprime;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import splprime.ast.Stmt;
+import splprime.ast_handwritten.Stmt;
 import splprime.parser.Parser;
 import splprime.scan.Scanner;
 import splprime.scan.Token;

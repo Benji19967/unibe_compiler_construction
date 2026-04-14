@@ -1,4 +1,4 @@
-package splprime.ast;
+package splprime.ast_handwritten;
 
 public class WhileStmt extends Stmt {
     public final Expr condition;

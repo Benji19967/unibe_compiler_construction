@@ -1,8 +1,11 @@
 package splprime.generated_scan;
 
+import splprime.ast_generated.Stmt;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class GeneratedScanner {
     public static void main(String[] args) {
@@ -15,7 +18,10 @@ public class GeneratedScanner {
 //                System.out.println("Token: " + SPLPrimeConstants.tokenImage[token.kind]);
 //            }
 
-            parser.program();
+            List<Stmt> statements = parser.program();
+            for (Stmt s : statements) {
+                System.out.println(s);
+            }
 
             inputStream.close();
         } catch (IOException | ParseException e) {

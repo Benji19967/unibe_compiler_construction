@@ -1,4 +1,4 @@
-package splprime.ast;
+package splprime.ast_handwritten;
 
 public class ExprStmt extends Stmt {
     public final Expr expression;

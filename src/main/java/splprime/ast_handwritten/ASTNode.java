@@ -1,4 +1,4 @@
-package splprime.ast;
+package splprime.ast_handwritten;
 
 public interface ASTNode {
 

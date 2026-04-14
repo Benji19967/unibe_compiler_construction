@@ -1,6 +1,6 @@
-package splprime.ast;
+package splprime.ast_generated;
 
-import splprime.scan.Token;
+import splprime.generated_scan.Token;
 
 public class Var extends Stmt {
     final Token name;
