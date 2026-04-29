@@ -2,6 +2,22 @@
 
 Building an interpreter from scratch as part of the course compiler construction at the University of Bern.
 
+## Getting Started
+
+Create an SPL Prime program here: `inputs/<program-name>.spl`.
+
+Run it:
+
+```shell
+./spl <program-name>
+```
+
+For example:
+
+```shell
+./spl fibonacci
+```
+
 ## Folder Structure
 
     .
@@ -37,20 +53,3 @@ Building an interpreter from scratch as part of the course compiler construction
     ├── README.md
     │
     └── spl                                         # Script to simplify running SPL Prime programs
-
-
-## Getting Started
-
-Create an SPL Prime program here: `inputs/<program-name>.spl`.
-
-Run it:
-
-```shell
-./spl <program-name>
-```
-
-For example:
-
-```shell
-./spl fibonacci
-```
