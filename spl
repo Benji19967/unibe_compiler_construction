@@ -1,0 +1,2 @@
+#!/bin/bash
+java src/main/java/splprime/generated_scan/SplPrimeMain.java "inputs/$1.spl"

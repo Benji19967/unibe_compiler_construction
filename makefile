@@ -24,3 +24,6 @@ cc_generated_scanner:
 
 generated_scanner:
 	java src/main/java/splprime/generated_scan/GeneratedScanner.java
+
+run:
+	java src/main/java/splprime/generated_scan/SplPrimeMain.java ${ARGS}
