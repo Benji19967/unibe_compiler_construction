@@ -10,7 +10,7 @@ public class Variable extends Expr {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitVariable(this);
     }
 }

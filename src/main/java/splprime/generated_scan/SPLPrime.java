@@ -319,17 +319,25 @@ left = new BinaryExpr(left, op, right);
 
   static final public Expr primary() throws ParseException {splprime.generated_scan.Token t; Expr e;
     if (jj_2_34(2)) {
-      t = jj_consume_token(TRUE);
-{if ("" != null) return new Literal(t);}
+      // Pass the actual boolean value
+          t = jj_consume_token(TRUE);
+{if ("" != null) return new Literal(true);}
     } else if (jj_2_35(2)) {
       t = jj_consume_token(FALSE);
-{if ("" != null) return new Literal(t);}
+{if ("" != null) return new Literal(false);}
     } else if (jj_2_36(2)) {
       t = jj_consume_token(NUMBER);
-{if ("" != null) return new Literal(t);}
+Object val;
+                       if (t.image.contains(".")) {
+                           val = Double.parseDouble(t.image);
+                       } else {
+                           val = Integer.parseInt(t.image);
+                       }
+                       {if ("" != null) return new Literal(val);}
     } else if (jj_2_37(2)) {
       t = jj_consume_token(STRING);
-{if ("" != null) return new Literal(t);}
+String s = t.image.substring(1, t.image.length() - 1);
+                       {if ("" != null) return new Literal(s);}
     } else if (jj_2_38(2)) {
       jj_consume_token(LEFT_PAREN);
       e = expression();
@@ -747,6 +755,12 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
+  static private boolean jj_3_39()
+ {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_logic_or_152_5_18()
  {
     if (jj_3R_logic_and_163_5_19()) return true;
@@ -764,6 +778,13 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
+  static private boolean jj_3_38()
+ {
+    if (jj_scan_token(LEFT_PAREN)) return true;
+    if (jj_3R_expression_139_5_12()) return true;
+    return false;
+  }
+
   static private boolean jj_3_13()
  {
     if (jj_3R_logic_or_152_5_18()) return true;
@@ -778,6 +799,12 @@ left = new BinaryExpr(left, op, right);
     jj_scanpos = xsp;
     if (jj_3_13()) return true;
     }
+    return false;
+  }
+
+  static private boolean jj_3_37()
+ {
+    if (jj_scan_token(STRING)) return true;
     return false;
   }
 
@@ -818,25 +845,6 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
-  static private boolean jj_3_39()
- {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_38()
- {
-    if (jj_scan_token(LEFT_PAREN)) return true;
-    if (jj_3R_expression_139_5_12()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_37()
- {
-    if (jj_scan_token(STRING)) return true;
-    return false;
-  }
-
   static private boolean jj_3_36()
  {
     if (jj_scan_token(NUMBER)) return true;
@@ -849,7 +857,7 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
-  static private boolean jj_3R_primary_224_5_25()
+  static private boolean jj_3R_primary_225_5_25()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -872,6 +880,12 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
+  static private boolean jj_3_34()
+ {
+    if (jj_scan_token(TRUE)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_block_129_5_17()
  {
     if (jj_scan_token(LEFT_BRACE)) return true;
@@ -884,15 +898,9 @@ left = new BinaryExpr(left, op, right);
     return false;
   }
 
-  static private boolean jj_3_34()
- {
-    if (jj_scan_token(TRUE)) return true;
-    return false;
-  }
-
   static private boolean jj_3_33()
  {
-    if (jj_3R_primary_224_5_25()) return true;
+    if (jj_3R_primary_225_5_25()) return true;
     return false;
   }
 

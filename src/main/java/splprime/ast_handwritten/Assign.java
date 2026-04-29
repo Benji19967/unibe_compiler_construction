@@ -12,7 +12,7 @@ public class Assign extends Expr {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitAssign(this);
     }
 }

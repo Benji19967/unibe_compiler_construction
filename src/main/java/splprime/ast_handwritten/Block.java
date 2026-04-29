@@ -10,7 +10,7 @@ public class Block extends Stmt {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitBlock(this);
     }
 }

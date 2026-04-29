@@ -10,7 +10,7 @@ public class WhileStmt extends Stmt {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitWhileStmt(this);
     }
 }

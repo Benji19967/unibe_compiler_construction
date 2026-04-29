@@ -2,27 +2,27 @@ package splprime.ast_generated;
 
 public interface Visitor {
 
-    int visitBinaryExpr(BinaryExpr expr);
+    Object visitBinaryExpr(BinaryExpr expr);
 
-    int visitUnaryExpr(UnaryExpr expr);
+    Object visitUnaryExpr(UnaryExpr expr);
 
-    int visitAssign(Assign expr);
+    Object visitAssign(Assign expr);
 
-    int visitGrouping(Grouping expr);
+    Object visitGrouping(Grouping expr);
 
-    int visitLiteral(Literal expr);
+    Object visitLiteral(Literal expr);
 
-    int visitVariable(Variable expr);
+    Object visitVariable(Variable expr);
 
-    int visitIfStmt(IfStmt stmt);
+    Object visitIfStmt(IfStmt stmt);
 
-    int visitExprStmt(ExprStmt stmt);
+    Object visitExprStmt(ExprStmt stmt);
 
-    int visitPrintStmt(PrintStmt stmt);
+    Object visitPrintStmt(PrintStmt stmt);
 
-    int visitWhileStmt(WhileStmt stmt);
+    Object visitWhileStmt(WhileStmt stmt);
 
-    int visitBlock(Block stmt);
+    Object visitBlock(Block stmt);
 
-    int visitVar(Var stmt);
+    Object visitVar(Var stmt);
 }

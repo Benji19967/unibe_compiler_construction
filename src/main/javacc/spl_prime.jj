@@ -221,10 +221,29 @@ Expr unary() : { splprime.generated_scan.Token t; Expr e; }
 
 Expr primary() : { splprime.generated_scan.Token t; Expr e; }
 {
-    t = <TRUE>       { return new Literal(t); }
-  | t = <FALSE>      { return new Literal(t); }
-  | t = <NUMBER>     { return new Literal(t); }
-  | t = <STRING>     { return new Literal(t); }
+    // Pass the actual boolean value
+    t = <TRUE>       { return new Literal(true); }
+  | t = <FALSE>      { return new Literal(false); }
+
+  // Convert the string digits into a real Java Number
+  | t = <NUMBER>     {
+                       Object val;
+                       if (t.image.contains(".")) {
+                           val = Double.parseDouble(t.image);
+                       } else {
+                           val = Integer.parseInt(t.image);
+                       }
+                       return new Literal(val);
+                     }
+
+  // Strip the quotes from the string (e.g., "hello" -> hello)
+  | t = <STRING>     {
+                       String s = t.image.substring(1, t.image.length() - 1);
+                       return new Literal(s);
+                     }
+
   | <LEFT_PAREN> e = expression() <RIGHT_PAREN> { return new Grouping(e); }
+
+  // Note: Variable stays as 't' because the environment needs the name (the string)
   | t = <IDENTIFIER> { return new Variable(t); }
 }

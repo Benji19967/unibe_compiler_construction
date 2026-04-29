@@ -1,6 +1,7 @@
 package splprime.generated_scan;
 
 import splprime.ast_generated.ASTPrinterVisitor;
+import splprime.ast_generated.InterpreterVisitor;
 import splprime.ast_generated.Stmt;
 
 import java.io.FileInputStream;
@@ -11,7 +12,7 @@ import java.util.List;
 public class GeneratedScanner {
     public static void main(String[] args) {
         try {
-            InputStream inputStream = new FileInputStream("inputs/sample.spl");
+            InputStream inputStream = new FileInputStream("inputs/euclidean.spl");
             SPLPrime parser = new SPLPrime(inputStream);
 
 //            Token token;
@@ -20,10 +21,13 @@ public class GeneratedScanner {
 //            }
 
             List<Stmt> statements = parser.program();
-            ASTPrinterVisitor visitor = new ASTPrinterVisitor();
-            for (Stmt s : statements) {
-                s.accept(visitor);
-            }
+//            ASTPrinterVisitor visitor = new ASTPrinterVisitor();
+//            for (Stmt s : statements) {
+//                s.accept(visitor);
+//            }
+
+            InterpreterVisitor interpreter = new InterpreterVisitor();
+            interpreter.interpret(statements);
 
             inputStream.close();
         } catch (IOException | ParseException e) {

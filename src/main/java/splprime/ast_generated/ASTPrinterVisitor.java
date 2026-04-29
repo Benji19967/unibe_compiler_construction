@@ -3,7 +3,7 @@ package splprime.ast_generated;
 public class ASTPrinterVisitor implements Visitor {
 
     @Override
-    public int visitBinaryExpr(BinaryExpr expr) {
+    public Object  visitBinaryExpr(BinaryExpr expr) {
         expr.left.accept(this);
         System.out.print(" " + expr.operator.image + " ");
         expr.right.accept(this);
@@ -11,14 +11,14 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitUnaryExpr(UnaryExpr expr) {
+    public Object  visitUnaryExpr(UnaryExpr expr) {
         System.out.print(expr.operator.image);
         expr.right.accept(this);
         return 0;
     }
 
     @Override
-    public int visitAssign(Assign expr) {
+    public Object  visitAssign(Assign expr) {
         System.out.print(expr.name.image + " = ");
         expr.value.accept(this);
         // Note: We don't print a semicolon here because Assign is an Expr,
@@ -26,7 +26,7 @@ public class ASTPrinterVisitor implements Visitor {
         return 0;
     }
     @Override
-    public int visitGrouping(Grouping expr) {
+    public Object  visitGrouping(Grouping expr) {
         System.out.print("(");
         expr.inner.accept(this);
         System.out.print(")");
@@ -34,19 +34,19 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitLiteral(Literal expr) {
-        System.out.print(expr.value.image);
+    public Object  visitLiteral(Literal expr) {
+        System.out.print(expr.value);
         return 0;
     }
 
     @Override
-    public int visitVariable(Variable expr) {
+    public Object  visitVariable(Variable expr) {
         System.out.print(expr.name.image);
         return 0;
     }
 
     @Override
-    public int visitIfStmt(IfStmt stmt) {
+    public Object  visitIfStmt(IfStmt stmt) {
         System.out.print("if (");
         stmt.condition.accept(this);
         System.out.print(") ");
@@ -59,14 +59,14 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitExprStmt(ExprStmt stmt) {
+    public Object  visitExprStmt(ExprStmt stmt) {
         stmt.expression.accept(this);
         System.out.println(";");
         return 0;
     }
 
     @Override
-    public int visitPrintStmt(PrintStmt stmt) {
+    public Object  visitPrintStmt(PrintStmt stmt) {
         System.out.print("print ");
         stmt.expression.accept(this);
         System.out.println(";");
@@ -74,7 +74,7 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitWhileStmt(WhileStmt stmt) {
+    public Object  visitWhileStmt(WhileStmt stmt) {
         System.out.print("while (");
         stmt.condition.accept(this);
         System.out.print(") ");
@@ -83,7 +83,7 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitBlock(Block stmt) {
+    public Object  visitBlock(Block stmt) {
         System.out.println("{");
         for (Stmt s : stmt.statements) {
             System.out.print("  "); // Simple indentation
@@ -94,7 +94,7 @@ public class ASTPrinterVisitor implements Visitor {
     }
 
     @Override
-    public int visitVar(Var stmt) {
+    public Object  visitVar(Var stmt) {
         System.out.print("var " + stmt.name.image);
         if (stmt.initializer != null) {
             System.out.print(" = ");

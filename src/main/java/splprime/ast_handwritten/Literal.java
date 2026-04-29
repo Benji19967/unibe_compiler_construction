@@ -8,7 +8,7 @@ public class Literal extends Expr {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitLiteral(this);
     }
 }

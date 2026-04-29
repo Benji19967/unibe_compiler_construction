@@ -12,7 +12,7 @@ public class Var extends Stmt {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitVar(this);
     }
 }

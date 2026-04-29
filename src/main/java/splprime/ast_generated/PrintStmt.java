@@ -8,7 +8,7 @@ public class PrintStmt extends Stmt {
     }
 
     @Override
-    public int accept(Visitor v) {
+    public Object accept(Visitor v) {
         return v.visitPrintStmt(this);
     }
 }
